@@ -222,43 +222,44 @@ export default function DashboardClient({ user }: { user: any }) {
         </div>
 
         {/* Top Bar Actions & Phishing Finder Integration */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#F1F5F9', padding: '4px 10px', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: '600', color: '#10B981' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#F1F5F9', padding: '4px 10px', borderRadius: '9999px', fontSize: '0.75rem', fontWeight: '600', color: '#10B981', whiteSpace: 'nowrap' }}>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
             Ready
           </div>
 
-          {/* INTEGRATED PHISHING & EMAIL FINDER BUTTON IN TOP BAR */}
+          {/* COMPACT PHISHING BUTTON */}
           <button
             onClick={() => setShowPhishingModal(true)}
             className="btn-pill"
             style={{
-              height: '34px',
-              padding: '0 16px',
-              fontSize: '0.78rem',
+              height: '30px',
+              padding: '0 12px',
+              fontSize: '0.75rem',
               background: '#0066FF',
               color: '#FFFFFF',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px',
-              fontWeight: '600'
+              gap: '5px',
+              fontWeight: '600',
+              whiteSpace: 'nowrap'
             }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
               <polyline points="22,6 12,13 2,6" />
             </svg>
-            Phishing & Email Detector
+            Email & Phishing Scan
           </button>
 
-          <div style={{ fontSize: '0.8rem', color: 'var(--text-dark-muted)' }}>
+          <div style={{ fontSize: '0.8rem', color: 'var(--text-dark-muted)', whiteSpace: 'nowrap' }}>
             User: <strong style={{ color: 'var(--text-dark-title)' }}>{user.name || user.email}</strong>
           </div>
 
           <a 
             href="/login"
             className="btn-link"
-            style={{ fontSize: '0.78rem', padding: '4px 10px' }}
+            style={{ fontSize: '0.78rem', padding: '4px 12px', whiteSpace: 'nowrap' }}
           >
             Login Portal
           </a>
@@ -266,10 +267,10 @@ export default function DashboardClient({ user }: { user: any }) {
           <button 
             onClick={handleLogout} 
             className="btn" 
-            style={{ width: 'auto', height: '32px', padding: '0 14px', fontSize: '0.78rem' }}
+            style={{ width: 'auto', height: '32px', padding: '0 16px', fontSize: '0.78rem', whiteSpace: 'nowrap' }}
             disabled={isPending}
           >
-            {isPending ? 'Out...' : 'Sign Out'}
+            {isPending ? 'Signing Out...' : 'Sign Out'}
           </button>
         </div>
       </header>
