@@ -1,13 +1,15 @@
 import { getSession } from './login/actions';
-import { redirect } from 'next/navigation';
 import DashboardClient from '@/components/DashboardClient';
 
 export default async function HomePage() {
   const session = await getSession();
   
-  if (!session) {
-    redirect('/login');
-  }
+  // Temporarily bypass login redirect for previewing the dashboard
+  const user = session || {
+    userId: 'demo-user-123',
+    email: 'demo@cybersafe.org',
+    name: 'Demo Analyst',
+  };
 
-  return <DashboardClient user={session} />;
+  return <DashboardClient user={user} />;
 }

@@ -17,9 +17,9 @@ export default function DashboardClient({ user }: { user: any }) {
   const [scanProgress, setScanProgress] = useState(0);
   const [scanStatus, setScanStatus] = useState<string | null>(null);
   const [logs, setLogs] = useState<string[]>([
-    'System initialization completed.',
-    `Agent session active for ${user.email}`,
-    'Ready for threat intelligence scanning...'
+    'System security services initialized.',
+    `Connected as ${user.email || 'Demo Analyst'}`,
+    'Ready for malware & threat analysis...'
   ]);
   const [isPending, startTransition] = useTransition();
 
@@ -35,7 +35,6 @@ export default function DashboardClient({ user }: { user: any }) {
     setLogs((prev) => [...prev, `[${new Date().toLocaleTimeString()}] ${message}`]);
   };
 
-  // Drag and drop handlers
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -67,14 +66,13 @@ export default function DashboardClient({ user }: { user: any }) {
   const startFileScan = (fileName: string, fileSize: number) => {
     setScanProgress(0);
     setScanStatus('scanning');
-    addLog(`Initiated analysis on file: ${fileName} (${(fileSize / 1024).toFixed(2)} KB)`);
+    addLog(`Analyzing file payload: ${fileName} (${(fileSize / 1024).toFixed(1)} KB)`);
 
     const steps = [
-      { progress: 15, msg: 'Calculating SHA-256 hash...' },
-      { progress: 40, msg: 'Querying threat intelligence databases (VirusTotal)...' },
-      { progress: 65, msg: 'Checking metadata anomalies & certificate validity...' },
-      { progress: 85, msg: 'Aggregating scanner reports...' },
-      { progress: 100, msg: 'Scan complete. File signature clean: NO THREATS FOUND.' }
+      { progress: 20, msg: 'Hashing file signature...' },
+      { progress: 50, msg: 'Checking VirusTotal & threat intelligence databases...' },
+      { progress: 80, msg: 'Performing deep static analysis...' },
+      { progress: 100, msg: 'Scan complete. File signature clean: NO THREATS DETECTED.' }
     ];
 
     let currentStep = 0;
@@ -87,7 +85,7 @@ export default function DashboardClient({ user }: { user: any }) {
         clearInterval(interval);
         setScanStatus('complete');
       }
-    }, 1000);
+    }, 900);
   };
 
   const handleUrlSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -97,13 +95,12 @@ export default function DashboardClient({ user }: { user: any }) {
 
     setScanProgress(0);
     setScanStatus('scanning');
-    addLog(`Starting domain/IP health scan for: ${urlInput}`);
+    addLog(`Scanning target web address: ${urlInput}`);
 
     const steps = [
-      { progress: 20, msg: 'Performing DNS lookup & IP extraction...' },
-      { progress: 50, msg: 'Querying blacklists and phishing reputation databases...' },
-      { progress: 80, msg: 'Scanning SSL certificate transparency logs...' },
-      { progress: 100, msg: `Reputation scan complete. Domain is safe (0/90 detection engines flag it).` }
+      { progress: 25, msg: 'Resolving domain name & IP address...' },
+      { progress: 60, msg: 'Checking against global phishing & malware blacklists...' },
+      { progress: 100, msg: `Scan complete: ${urlInput} is clean and safe to visit.` }
     ];
 
     let currentStep = 0;
@@ -116,83 +113,127 @@ export default function DashboardClient({ user }: { user: any }) {
         clearInterval(interval);
         setScanStatus('complete');
       }
-    }, 1000);
+    }, 900);
   };
 
   return (
-    <div style={{ padding: '20px', minHeight: '100vh', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ padding: '24px 32px', minHeight: '100vh', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       
       {/* Top Header Bar */}
-      <header className="glass-panel" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', flexWrap: 'wrap', gap: '15px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          </svg>
-          <h1 style={{ fontSize: '1.4rem', letterSpacing: '0.05em' }}>CYBERSAFE</h1>
+      <header 
+        style={{ 
+          background: '#FFFFFF', 
+          borderRadius: '24px', 
+          padding: '16px 28px', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          boxShadow: '0 10px 30px -10px rgba(15, 23, 42, 0.08)',
+          border: 'none',
+          flexWrap: 'wrap',
+          gap: '16px'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <img 
+            src="/logo.png" 
+            alt="CyberSafe Logo" 
+            style={{ width: '38px', height: 'auto', objectFit: 'contain' }}
+          />
+          <div>
+            <h1 style={{ fontFamily: 'var(--font-brand)', fontSize: '1.4rem', fontWeight: '800', color: 'var(--text-dark-title)', letterSpacing: '-0.02em' }}>
+              CyberSafe
+            </h1>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-dark-muted)', fontWeight: '500' }}>
+              Enterprise Threat Intelligence
+            </span>
+          </div>
         </div>
 
-        {/* Status indicator */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', fontSize: '0.85rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-success)', display: 'inline-block', boxShadow: '0 0 8px var(--color-success)' }} />
-            <span style={{ color: 'var(--text-secondary)' }}>NODE STATUS:</span>
-            <span style={{ fontWeight: 'bold' }}>ACTIVE</span>
+        {/* Status indicator & pill buttons */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#F1F5F9', padding: '6px 14px', borderRadius: '9999px', fontSize: '0.82rem', fontWeight: '600', color: '#10B981' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
+            System Ready
           </div>
 
-          <div style={{ color: 'var(--text-secondary)' }}>
-            AGENT: <span style={{ color: '#fff', fontWeight: '500' }}>{user.name || user.email}</span>
+          <div style={{ fontSize: '0.88rem', color: 'var(--text-dark-muted)', fontWeight: '500' }}>
+            User: <strong style={{ color: 'var(--text-dark-title)' }}>{user.name || user.email}</strong>
           </div>
+
+          <a 
+            href="/login"
+            className="btn-link"
+            style={{ fontSize: '0.85rem' }}
+          >
+            Login Portal
+          </a>
 
           <button 
             onClick={handleLogout} 
-            className="btn btn-cyan" 
-            style={{ width: 'auto', padding: '8px 16px', fontSize: '0.8rem' }}
+            className="btn" 
+            style={{ width: 'auto', height: '40px', padding: '0 20px', fontSize: '0.85rem' }}
             disabled={isPending}
           >
-            {isPending ? 'Logging out...' : 'Sever Connection'}
+            {isPending ? 'Signing Out...' : 'Sign Out'}
           </button>
         </div>
       </header>
 
-      {/* Grid Dashboard Content */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '20px', flex: '1', flexWrap: 'wrap' }} className="dashboard-grid">
+      {/* Main Dashboard Layout */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '24px', flex: '1' }} className="dashboard-grid">
         
-        {/* Left Side: Analyzer Hero Component */}
-        <div className="glass-panel" style={{ padding: '30px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* Left Side: White Analyzer Card Module */}
+        <div 
+          style={{ 
+            background: '#FFFFFF', 
+            borderRadius: '24px', 
+            padding: '36px', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '24px',
+            boxShadow: '0 20px 40px -15px rgba(15, 23, 42, 0.12)',
+            border: 'none'
+          }}
+        >
           <div>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>Aggregated Threat Intelligence</h2>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-              Upload any file or submit a URL to perform a concurrent signature scan against multiple Antivirus Engines.
+            <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '1.6rem', fontWeight: '700', color: 'var(--text-dark-title)', marginBottom: '6px' }}>
+              Malware & Threat Scanner
+            </h2>
+            <p style={{ color: 'var(--text-dark-muted)', fontSize: '0.95rem' }}>
+              Upload any suspicious file or web link to analyze it across 90+ virus detection engines.
             </p>
           </div>
 
-          {/* Tab Selector */}
-          <div style={{ display: 'flex', gap: '10px', borderBottom: '1px solid var(--border-muted)', paddingBottom: '12px' }}>
+          {/* Tab Selector Buttons */}
+          <div style={{ display: 'flex', gap: '10px', background: '#F1F5F9', padding: '6px', borderRadius: '9999px', width: 'fit-content' }}>
             <button 
-              className={`btn-link ${activeTab === 'file' ? 'active-tab' : ''}`} 
+              className="btn-pill"
               onClick={() => setActiveTab('file')}
               style={{ 
-                color: activeTab === 'file' ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-                fontWeight: activeTab === 'file' ? '600' : '400',
-                borderBottom: activeTab === 'file' ? '2px solid var(--accent-cyan)' : 'none',
-                borderRadius: '0',
-                padding: '8px 12px'
+                height: '38px',
+                padding: '0 20px',
+                fontSize: '0.88rem',
+                background: activeTab === 'file' ? '#0F172A' : 'transparent',
+                color: activeTab === 'file' ? '#FFFFFF' : 'var(--text-dark-muted)',
+                boxShadow: activeTab === 'file' ? '0 4px 12px rgba(15, 23, 42, 0.1)' : 'none'
               }}
             >
               Analyze File
             </button>
             <button 
-              className={`btn-link ${activeTab === 'url' ? 'active-tab' : ''}`} 
+              className="btn-pill"
               onClick={() => setActiveTab('url')}
               style={{ 
-                color: activeTab === 'url' ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-                fontWeight: activeTab === 'url' ? '600' : '400',
-                borderBottom: activeTab === 'url' ? '2px solid var(--accent-cyan)' : 'none',
-                borderRadius: '0',
-                padding: '8px 12px'
+                height: '38px',
+                padding: '0 20px',
+                fontSize: '0.88rem',
+                background: activeTab === 'url' ? '#0F172A' : 'transparent',
+                color: activeTab === 'url' ? '#FFFFFF' : 'var(--text-dark-muted)',
+                boxShadow: activeTab === 'url' ? '0 4px 12px rgba(15, 23, 42, 0.1)' : 'none'
               }}
             >
-              Scan URL/IP Address
+              Scan Web Link / IP
             </button>
           </div>
 
@@ -205,66 +246,72 @@ export default function DashboardClient({ user }: { user: any }) {
                 onDragLeave={handleDrag}
                 onDrop={handleDrop}
                 style={{
-                  border: `2px dashed ${dragActive ? 'var(--accent-cyan)' : 'var(--border-muted)'}`,
-                  background: dragActive ? 'var(--accent-cyan-dim)' : 'rgba(8, 9, 13, 0.4)',
-                  borderRadius: '12px',
-                  padding: '50px 20px',
+                  background: dragActive ? '#E2E8F0' : '#F8FAFC',
+                  borderRadius: '20px',
+                  padding: '60px 24px',
                   textAlign: 'center',
                   cursor: 'pointer',
-                  transition: 'var(--transition-smooth)'
+                  transition: 'all 0.2s ease',
+                  border: 'none'
                 }}
               >
                 <input 
                   type="file" 
                   id="file-upload" 
-                  multiple={false} 
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                 />
-                <label htmlFor="file-upload" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 6px var(--accent-cyan-glow))' }}>
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="17 8 12 3 7 8" />
-                    <line x1="12" y1="3" x2="12" y2="15" />
-                  </svg>
+                <label htmlFor="file-upload" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                  <div style={{ width: '56px', height: '56px', borderRadius: '9999px', background: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 16px rgba(15, 23, 42, 0.08)' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0066FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                  </div>
                   <div>
-                    <h3 style={{ fontSize: '1.1rem', marginBottom: '4px' }}>Drag & Drop Secure Payload</h3>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>or click to browse local files (max 32MB)</p>
+                    <h3 style={{ fontSize: '1.15rem', fontWeight: '700', color: 'var(--text-dark-title)', marginBottom: '4px' }}>
+                      Drag & Drop your file here
+                    </h3>
+                    <p style={{ color: 'var(--text-dark-muted)', fontSize: '0.9rem' }}>
+                      or click to browse local files from your device
+                    </p>
                   </div>
                 </label>
               </div>
             ) : (
-              <form onSubmit={handleUrlSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <form onSubmit={handleUrlSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div className="form-group">
-                  <label className="form-label" htmlFor="url-input">Target URL or Host IP</label>
+                  <label className="form-label" htmlFor="url-input">Target Web Address or IP</label>
                   <input 
                     id="url-input"
                     name="url" 
                     type="text" 
-                    placeholder="https://example-phishing-threat.com" 
+                    placeholder="https://example.com" 
                     className="form-input" 
                     required 
                   />
                 </div>
-                <button type="submit" className="btn btn-cyan">Begin DNS & Domain Reputation Audit</button>
+                <button type="submit" className="btn">
+                  Scan Web Address
+                </button>
               </form>
             )}
 
             {/* Scan Progress Bar */}
             {scanStatus && (
-              <div style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                  <span>{scanStatus === 'scanning' ? 'Executing threat vector audits...' : 'Scan Complete'}</span>
-                  <span style={{ color: 'var(--accent-cyan)', fontWeight: 'bold' }}>{scanProgress}%</span>
+              <div style={{ marginTop: '28px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem', fontWeight: '600', color: 'var(--text-dark-title)' }}>
+                  <span>{scanStatus === 'scanning' ? 'Scanning threat databases...' : 'Analysis Complete'}</span>
+                  <span style={{ color: '#0066FF' }}>{scanProgress}%</span>
                 </div>
-                <div style={{ height: '6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ height: '8px', background: '#F1F5F9', borderRadius: '9999px', overflow: 'hidden' }}>
                   <div 
                     style={{ 
                       height: '100%', 
-                      background: scanProgress === 100 && !logs[logs.length-1].includes('clean') ? 'var(--color-success)' : 'var(--accent-cyan)', 
+                      background: scanProgress === 100 ? '#10B981' : '#0066FF', 
                       width: `${scanProgress}%`, 
-                      transition: 'width 0.3s ease-out',
-                      boxShadow: '0 0 8px var(--accent-cyan-glow)'
+                      transition: 'width 0.3s ease-out'
                     }} 
                   />
                 </div>
@@ -273,16 +320,29 @@ export default function DashboardClient({ user }: { user: any }) {
           </div>
         </div>
 
-        {/* Right Side: Log Feed / Console Terminal */}
-        <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        {/* Right Side: Security Activity Terminal Feed */}
+        <div 
+          style={{ 
+            background: '#FFFFFF', 
+            borderRadius: '24px', 
+            padding: '28px', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '16px',
+            boxShadow: '0 20px 40px -15px rgba(15, 23, 42, 0.12)',
+            border: 'none'
+          }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h2 style={{ fontSize: '1.1rem', letterSpacing: '0.03em', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>Security Log</h2>
+            <h2 style={{ fontFamily: 'var(--font-brand)', fontSize: '1.15rem', fontWeight: '700', color: 'var(--text-dark-title)' }}>
+              Analysis Activity Log
+            </h2>
             <button 
               onClick={() => setLogs(['System console reset. Ready.'])} 
-              className="btn-link" 
-              style={{ fontSize: '0.75rem', padding: '2px' }}
+              className="card-footer-btn" 
+              style={{ fontSize: '0.8rem' }}
             >
-              Clear Logs
+              Clear
             </button>
           </div>
 
@@ -290,30 +350,31 @@ export default function DashboardClient({ user }: { user: any }) {
           <div 
             style={{ 
               flex: 1, 
-              background: '#040508', 
-              border: '1px solid var(--border-muted)', 
-              borderRadius: '8px', 
-              padding: '16px', 
+              background: '#F8FAFC', 
+              border: 'none', 
+              borderRadius: '16px', 
+              padding: '18px', 
               fontFamily: 'Consolas, Monaco, monospace', 
-              fontSize: '0.8rem', 
-              lineHeight: '1.5', 
-              color: 'var(--text-secondary)',
+              fontSize: '0.82rem', 
+              lineHeight: '1.6', 
+              color: 'var(--text-dark-body)',
               overflowY: 'auto',
-              maxHeight: '400px',
+              maxHeight: '420px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '8px'
+              gap: '10px'
             }}
           >
             {logs.map((log, index) => (
               <div 
                 key={index} 
                 style={{ 
-                  color: log.includes('COMPLETE') || log.includes('clean') 
-                    ? 'var(--color-success)' 
-                    : log.includes('Initiated') || log.includes('Starting')
-                    ? '#fff'
-                    : 'var(--text-secondary)' 
+                  color: log.includes('clean') || log.includes('NO THREATS') || log.includes('safe') 
+                    ? '#10B981' 
+                    : log.includes('Analyzing') || log.includes('Scanning')
+                    ? '#0066FF'
+                    : 'var(--text-dark-body)',
+                  fontWeight: log.includes('clean') || log.includes('Analyzing') ? '600' : '400'
                 }}
               >
                 {log}
@@ -325,10 +386,6 @@ export default function DashboardClient({ user }: { user: any }) {
       </div>
 
       <style jsx global>{`
-        .active-tab {
-          border-bottom: 2px solid var(--accent-cyan) !important;
-          color: var(--accent-cyan) !important;
-        }
         @media (max-width: 900px) {
           .dashboard-grid {
             grid-template-columns: 1fr !important;
