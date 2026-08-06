@@ -433,16 +433,14 @@ html, body {
   }
 }
 
-/* Auto-Scrolling News Ticker Keyframes */
-@keyframes newsAutoScroll {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
+/* Smooth News Feed Scrollbar */
+.real-news-feed {
+  scroll-behavior: smooth;
 }
-
-.news-ticker-container:hover .news-ticker-content {
-  animation-play-state: paused !important;
+.real-news-feed::-webkit-scrollbar {
+  width: 4px;
+}
+.real-news-feed::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
 }
