@@ -352,20 +352,25 @@ export default function DashboardClient({ user }: { user: any }) {
       {/* Main Grid Layout */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '14px', flex: '1', minHeight: 0 }} className="dashboard-grid">
         
-        {/* Left Side: Compact White Analyzer Module */}
-        <div 
-          style={{ 
-            background: '#FFFFFF', 
-            borderRadius: '18px', 
-            padding: '20px 24px', 
-            display: 'flex', 
-            flexDirection: 'column', 
-            gap: '14px',
-            boxShadow: '0 10px 30px -10px rgba(15, 23, 42, 0.08)',
-            border: 'none',
-            overflowY: 'auto'
-          }}
-        >
+        {/* Left Side Column (2/3 Scanner + 1/3 Free Space Slot) */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', height: '100%', minHeight: 0 }}>
+          
+          {/* Top 2/3: Compact White Analyzer Module */}
+          <div 
+            style={{ 
+              flex: 2,
+              height: '66%',
+              background: '#FFFFFF', 
+              borderRadius: '18px', 
+              padding: '18px 22px', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '12px',
+              boxShadow: '0 10px 30px -10px rgba(15, 23, 42, 0.08)',
+              border: 'none',
+              overflowY: 'auto'
+            }}
+          >
           {/* Header & Demo Sample Selector Row */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
             <div>
@@ -603,6 +608,33 @@ export default function DashboardClient({ user }: { user: any }) {
 
             </div>
           )}
+          </div>
+
+          {/* Bottom 1/3: Reserved Free Space Widget Module */}
+          <div 
+            style={{ 
+              flex: 1, 
+              height: '34%',
+              background: '#FFFFFF', 
+              borderRadius: '18px', 
+              padding: '16px 20px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              boxShadow: '0 10px 30px -10px rgba(15, 23, 42, 0.08)',
+              border: '2px dashed #CBD5E1'
+            }}
+          >
+            <div style={{ textAlign: 'center', color: 'var(--text-dark-muted)' }}>
+              <div style={{ fontSize: '0.92rem', fontWeight: '700', color: 'var(--text-dark-title)' }}>
+                ➕ Reserved Widget Slot (1/3 Free Space)
+              </div>
+              <p style={{ fontSize: '0.78rem', marginTop: '2px' }}>
+                Clean free space — decide what widget you want to place here!
+              </p>
+            </div>
+          </div>
+
         </div>
 
         {/* Right Side: Compact Security Activity Terminal Feed */}
