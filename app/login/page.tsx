@@ -106,7 +106,7 @@ export default function LoginPage() {
 
       {/* Right Column (60%): Floating Floating Apple Authentication Card */}
       <div className="auth-card-right">
-        <div className="apple-card">
+        <div className="apple-card-white">
           
           {/* Card Header */}
           <div className="card-header">
