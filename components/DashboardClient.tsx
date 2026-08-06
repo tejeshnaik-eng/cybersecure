@@ -609,27 +609,132 @@ export default function DashboardClient({ user }: { user: any }) {
           )}
           </div>
 
-          {/* 1/3 Width: Reserved Free Space Widget Module (Side-by-side) */}
+          {/* 1/3 Width: Auto-Scrolling Cybersecurity News & Security Suggestions Widget */}
           <div 
+            className="news-ticker-container"
             style={{ 
               height: '100%',
               background: '#FFFFFF', 
               borderRadius: '18px', 
-              padding: '20px', 
+              padding: '16px 18px', 
               display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
+              flexDirection: 'column', 
+              gap: '12px', 
               boxShadow: '0 10px 30px -10px rgba(15, 23, 42, 0.08)',
-              border: '2px dashed #CBD5E1'
+              border: 'none',
+              overflow: 'hidden',
+              position: 'relative'
             }}
           >
-            <div style={{ textAlign: 'center', color: 'var(--text-dark-muted)' }}>
-              <div style={{ fontSize: '0.92rem', fontWeight: '700', color: 'var(--text-dark-title)' }}>
-                ➕ Reserved Widget Slot (1/3 Free Space)
+            {/* Widget Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0066FF' }} />
+                <h3 style={{ fontFamily: 'var(--font-brand)', fontSize: '1.05rem', fontWeight: '700', color: 'var(--text-dark-title)' }}>
+                  Cyber News & Tips
+                </h3>
               </div>
-              <p style={{ fontSize: '0.78rem', marginTop: '4px' }}>
-                Clean free space — decide what widget you want to place here!
-              </p>
+              <span style={{ fontSize: '0.7rem', background: '#DCFCE7', color: '#15803D', padding: '2px 8px', borderRadius: '9999px', fontWeight: '700' }}>
+                ● LIVE FEED
+              </span>
+            </div>
+
+            {/* Auto-scrolling Ticker Content Wrapper */}
+            <div 
+              style={{ 
+                flex: 1, 
+                overflow: 'hidden', 
+                position: 'relative',
+                borderRadius: '12px'
+              }}
+            >
+              <div 
+                className="news-ticker-content"
+                style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: '12px',
+                  animation: 'newsAutoScroll 22s linear infinite'
+                }}
+              >
+                {/* News Item 1 */}
+                <div style={{ background: '#F8FAFC', padding: '12px', borderRadius: '14px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                  <img src="/news_threat.jpg" alt="Threat Alert" style={{ width: '42px', height: '42px', borderRadius: '10px', objectFit: 'cover', flexShrink: 0 }} />
+                  <div>
+                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '2px' }}>
+                      <span style={{ background: '#FEE2E2', color: '#DC2626', fontSize: '0.65rem', fontWeight: '800', padding: '2px 6px', borderRadius: '6px' }}>HIGH ALERT</span>
+                      <span style={{ fontSize: '0.68rem', color: 'var(--text-dark-muted)' }}>12m ago</span>
+                    </div>
+                    <h4 style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-dark-title)', lineHeight: '1.2' }}>
+                      Critical Zero-Day Kernel Patch (CVE-2026-2140)
+                    </h4>
+                    <p style={{ fontSize: '0.74rem', color: 'var(--text-dark-muted)', marginTop: '3px', lineHeight: '1.3' }}>
+                      Microsoft releases emergency out-of-band security patch for enterprise systems.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Suggestion 1 */}
+                <div style={{ background: '#F0FDF4', padding: '12px', borderRadius: '14px', borderLeft: '3px solid #10B981' }}>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '2px' }}>
+                    <span style={{ background: '#DCFCE7', color: '#15803D', fontSize: '0.65rem', fontWeight: '800', padding: '2px 6px', borderRadius: '6px' }}>💡 SUGGESTION</span>
+                  </div>
+                  <h4 style={{ fontSize: '0.82rem', fontWeight: '700', color: '#15803D', lineHeight: '1.2' }}>
+                    Enforce Hardware FIDO2 2FA
+                  </h4>
+                  <p style={{ fontSize: '0.74rem', color: 'var(--text-dark-body)', marginTop: '3px', lineHeight: '1.3' }}>
+                    Replace SMS OTPs with WebAuthn security keys to block credential harvesting phishing.
+                  </p>
+                </div>
+
+                {/* News Item 2 */}
+                <div style={{ background: '#F8FAFC', padding: '12px', borderRadius: '14px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                  <img src="/news_phish.jpg" alt="Phishing Alert" style={{ width: '42px', height: '42px', borderRadius: '10px', objectFit: 'cover', flexShrink: 0 }} />
+                  <div>
+                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '2px' }}>
+                      <span style={{ background: '#FEF3C7', color: '#D97706', fontSize: '0.65rem', fontWeight: '800', padding: '2px 6px', borderRadius: '6px' }}>PHISHING ALERT</span>
+                      <span style={{ fontSize: '0.68rem', color: 'var(--text-dark-muted)' }}>45m ago</span>
+                    </div>
+                    <h4 style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-dark-title)', lineHeight: '1.2' }}>
+                      Active QR-Code Phishing (Quishing) Spikes
+                    </h4>
+                    <p style={{ fontSize: '0.74rem', color: 'var(--text-dark-muted)', marginTop: '3px', lineHeight: '1.3' }}>
+                      Attackers bypass email filters using image-embedded QR codes targeting credentials.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Suggestion 2 */}
+                <div style={{ background: '#EFF6FF', padding: '12px', borderRadius: '14px', borderLeft: '3px solid #0066FF' }}>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '2px' }}>
+                    <span style={{ background: '#DBEAFE', color: '#1E40AF', fontSize: '0.65rem', fontWeight: '800', padding: '2px 6px', borderRadius: '6px' }}>☁️ CLOUD SAFETY</span>
+                  </div>
+                  <h4 style={{ fontSize: '0.82rem', fontWeight: '700', color: '#1E40AF', lineHeight: '1.2' }}>
+                    Harden Cloud S3 Buckets
+                  </h4>
+                  <p style={{ fontSize: '0.74rem', color: 'var(--text-dark-body)', marginTop: '3px', lineHeight: '1.3' }}>
+                    Audit IAM policies and block public access settings across AWS and Azure containers.
+                  </p>
+                </div>
+
+                {/* DUPLICATED ITEMS FOR INFINITE SCROLL SMOOTHNESS */}
+                <div style={{ background: '#F8FAFC', padding: '12px', borderRadius: '14px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                  <img src="/news_threat.jpg" alt="Threat Alert" style={{ width: '42px', height: '42px', borderRadius: '10px', objectFit: 'cover', flexShrink: 0 }} />
+                  <div>
+                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '2px' }}>
+                      <span style={{ background: '#FEE2E2', color: '#DC2626', fontSize: '0.65rem', fontWeight: '800', padding: '2px 6px', borderRadius: '6px' }}>HIGH ALERT</span>
+                      <span style={{ fontSize: '0.68rem', color: 'var(--text-dark-muted)' }}>12m ago</span>
+                    </div>
+                    <h4 style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-dark-title)', lineHeight: '1.2' }}>
+                      Critical Zero-Day Kernel Patch (CVE-2026-2140)
+                    </h4>
+                    <p style={{ fontSize: '0.74rem', color: 'var(--text-dark-muted)', marginTop: '3px', lineHeight: '1.3' }}>
+                      Microsoft releases emergency out-of-band security patch for enterprise systems.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
 

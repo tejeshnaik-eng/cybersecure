@@ -432,3 +432,17 @@ html, body {
     gap: 16px;
   }
 }
+
+/* Auto-Scrolling News Ticker Keyframes */
+@keyframes newsAutoScroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.news-ticker-container:hover .news-ticker-content {
+  animation-play-state: paused !important;
+}
