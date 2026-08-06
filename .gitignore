@@ -1,0 +1,23 @@
+# AI/editor
+.agents/
+.claude/
+.windsurf/
+
+# Next.js
+.next/
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+
+# Local database
+dev.db
+
+# Temporary/generated
+generated/
+
+# Design assets (if not part of the app)
+
