@@ -352,14 +352,12 @@ export default function DashboardClient({ user }: { user: any }) {
       {/* Main Grid Layout */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '14px', flex: '1', minHeight: 0 }} className="dashboard-grid">
         
-        {/* Left Side Column (2/3 Scanner + 1/3 Free Space Slot) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', height: '100%', minHeight: 0 }}>
+        {/* Left Side Main Area (2/3 Scanner + 1/3 Free Space Slot side-by-side) */}
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '14px', height: '100%', minHeight: 0 }}>
           
-          {/* Top 2/3: Compact White Analyzer Module */}
+          {/* 2/3 Width: Compact White Analyzer Module */}
           <div 
             style={{ 
-              flex: 2,
-              height: '66%',
               background: '#FFFFFF', 
               borderRadius: '18px', 
               padding: '18px 22px', 
@@ -368,7 +366,8 @@ export default function DashboardClient({ user }: { user: any }) {
               gap: '12px',
               boxShadow: '0 10px 30px -10px rgba(15, 23, 42, 0.08)',
               border: 'none',
-              overflowY: 'auto'
+              overflowY: 'auto',
+              height: '100%'
             }}
           >
           {/* Header & Demo Sample Selector Row */}
@@ -610,14 +609,13 @@ export default function DashboardClient({ user }: { user: any }) {
           )}
           </div>
 
-          {/* Bottom 1/3: Reserved Free Space Widget Module */}
+          {/* 1/3 Width: Reserved Free Space Widget Module (Side-by-side) */}
           <div 
             style={{ 
-              flex: 1, 
-              height: '34%',
+              height: '100%',
               background: '#FFFFFF', 
               borderRadius: '18px', 
-              padding: '16px 20px', 
+              padding: '20px', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
@@ -629,7 +627,7 @@ export default function DashboardClient({ user }: { user: any }) {
               <div style={{ fontSize: '0.92rem', fontWeight: '700', color: 'var(--text-dark-title)' }}>
                 ➕ Reserved Widget Slot (1/3 Free Space)
               </div>
-              <p style={{ fontSize: '0.78rem', marginTop: '2px' }}>
+              <p style={{ fontSize: '0.78rem', marginTop: '4px' }}>
                 Clean free space — decide what widget you want to place here!
               </p>
             </div>
